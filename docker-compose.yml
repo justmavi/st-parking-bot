@@ -1,22 +1,17 @@
 version: '3.4'
 services:
   bot:
-    image: ${DOCKER_REGISTRY-}armprankbot
+    image: ${DOCKER_REGISTRY-}stparkingbot
     build:
       context: .
       dockerfile: Dockerfile
     depends_on:
       - database
-      - redis
     restart: always
     environment:
       HTTP_PORT: $HTTP_PORT
       NODE_ENV: $NODE_ENV
       APP_HOST: $APP_HOST
-      UPLOADS_FOLDER: $UPLOADS_FOLDER
-      STATIC_FILES_PATH: $STATIC_FILES_PATH
-      JWT_SECRET: $JWT_SECRET
-      JWT_EXPIRATION_TIME: $JWT_EXPIRATION_TIME
       LOG_DIRECTORY_PATH: $LOG_DIRECTORY_PATH
       POSTGRES_HOST: $POSTGRES_HOST
       POSTGRES_PORT: $POSTGRES_PORT
@@ -26,16 +21,11 @@ services:
       TELEGRAM_BOT_TOKEN: $TELEGRAM_BOT_TOKEN
       TELEGRAM_BOT_WEBHOOK_URL: $TELEGRAM_BOT_WEBHOOK_URL
       TELEGRAM_PRIVATE_CHANNEL_ID: $TELEGRAM_PRIVATE_CHANNEL_ID
-      REDIS_HOST: $REDIS_HOST
-      REDIS_PORT: $REDIS_PORT
-      REDIS_DB: $REDIS_DB
       TWILIO_ACCOUNT_SID: $TWILIO_ACCOUNT_SID
       TWILIO_AUTH_TOKEN: $TWILIO_AUTH_TOKEN
-      PAYMENT_TOKEN: $PAYMENT_TOKEN
     volumes:
       - ./:/app/
       - /app/node_modules
-      - uploads:/app/$UPLOADS_FOLDER
     networks:
       main:
         aliases:
@@ -54,34 +44,6 @@ services:
       main:
         aliases:
           - database
-  redis:
-    image: redis:7.2.3
-    ports:
-      - $REDIS_PORT:$REDIS_PORT
-    volumes:
-      - redis:/var/data/redis
-    restart: always
-    networks:
-      main:
-        aliases:
-          - redis
-  nginx:
-    image: nginx:1.25.3
-    ports:
-      - 80:80
-    volumes:
-      - uploads:/var/www/data
-      - ./docker/nginx/templates:/etc/nginx/templates
-    environment:
-      BOT_PORT: $HTTP_PORT
-      APP_HOST: $APP_HOST
-      BOT_UPLOADS_FOLDER: /var/www/data
-      BOT_WEBHOOK_LOCATION: $TELEGRAM_BOT_WEBHOOK_URL
-      STATIC_FILES_PATH: $STATIC_FILES_PATH
-    networks:
-      main:
-        aliases:
-          - nginx
   ngrok:
     image: ngrok/ngrok:3
     restart: unless-stopped
@@ -105,6 +67,4 @@ networks:
   main:
 
 volumes:
-  uploads:
   pg:
-  redis:
