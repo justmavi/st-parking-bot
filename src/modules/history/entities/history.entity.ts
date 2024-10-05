@@ -10,6 +10,9 @@ export class History extends AppBaseEntity {
   @Column('bigint')
   public accountId: number;
 
+  @Column()
+  public gateId: number;
+
   @ManyToOne(() => Account)
   public account?: Account;
 

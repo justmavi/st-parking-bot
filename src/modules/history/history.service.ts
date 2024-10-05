@@ -22,7 +22,7 @@ export class HistoryService {
   }
 
   public create(account: Account, gateId: number) {
-    const entity = this.repository.create({ accountId: account.id });
+    const entity = this.repository.create({ accountId: account.id, gateId });
     return from(this.repository.save(entity));
   }
 
