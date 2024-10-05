@@ -9,9 +9,9 @@ export class AccountService {
   constructor(@InjectRepository(Account) private readonly repository: Repository<Account>) {
   }
 
-  public create(id: number) {
+  public create(id: number, name: string) {
     const cb = this.repository.createQueryBuilder();
-    const entity = this.repository.create({ id });
+    const entity = this.repository.create({ id, name });
 
     return from(this.repository.save(entity));
   }
