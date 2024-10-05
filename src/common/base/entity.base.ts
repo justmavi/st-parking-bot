@@ -1,4 +1,3 @@
-import { AutoMap } from '@automapper/classes';
 import {
   CreateDateColumn,
   PrimaryGeneratedColumn,
@@ -7,7 +6,6 @@ import {
 
 export class AppBaseEntity {
   @PrimaryGeneratedColumn()
-  @AutoMap()
   public id: number;
 
   @CreateDateColumn()
