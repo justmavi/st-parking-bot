@@ -21,8 +21,8 @@ export class HistoryService {
     ).pipe(map(([result]) => result));
   }
 
-  public create(account: Account, gateId: number) {
-    const entity = this.repository.create({ accountId: account.id, gateId });
+  public create(model: Partial<History>) {
+    const entity = this.repository.create(model);
     return from(this.repository.save(entity));
   }
 
