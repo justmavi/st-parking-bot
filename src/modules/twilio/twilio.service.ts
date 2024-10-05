@@ -52,7 +52,6 @@ export class TwilioServiceWrapper {
           : of({
               accountId: history.accountId,
               historyId: history.id,
-              date: history.createdAt,
               gateId: history.gateId
             } as CallInfo),
       ),

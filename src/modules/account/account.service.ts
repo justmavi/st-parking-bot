@@ -1,8 +1,8 @@
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { from } from 'rxjs';
 import { Repository } from 'typeorm';
 import { Account } from './entities/account.entity';
-import { Injectable } from '@nestjs/common';
-import { from, map } from 'rxjs';
 
 @Injectable()
 export class AccountService {
@@ -10,9 +10,12 @@ export class AccountService {
   }
 
   public create(id: number, name: string) {
-    const cb = this.repository.createQueryBuilder();
     const entity = this.repository.create({ id, name });
 
     return from(this.repository.save(entity));
+  }
+
+  public findOne(id: number) {
+    return from(this.repository.findOneBy({ id }));
   }
 }

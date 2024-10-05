@@ -1,20 +1,20 @@
 import { BotMessageTranslations } from '@bot/translations';
 import { Context } from '@bot/types/context.type';
+import { HistoryService } from '@history/history.service';
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { InjectBot } from 'nestjs-telegraf';
 import { from, map, mergeMap, of } from 'rxjs';
 import { Telegraf } from 'telegraf';
-import { FINAL_CALL_STATUSES } from './constants/twilio.constants';
+import { FINAL_CALL_STATUSES, SUCCESS_CALL_STATUS } from './constants/twilio.constants';
 import { CallWebhookDTO } from './dto/call-webhook.dto';
-import { RecordingWebhookDTO } from './dto/recording-webhook.dto';
 import { TwilioServiceWrapper } from './twilio.service';
-import { DateTime } from 'luxon';
 
 @Controller('twilio')
 export class TwilioController {
   constructor(
     @InjectBot() private readonly bot: Telegraf<Context>,
     private readonly twilioService: TwilioServiceWrapper,
+    private readonly historyService: HistoryService,
   ) {}
 
   @Post('call')
@@ -25,13 +25,11 @@ export class TwilioController {
         from(
           this.bot.telegram.sendMessage(
             callInfo.accountId,
-            BotMessageTranslations[dto.callStatus].message[callInfo.language],
+            BotMessageTranslations[dto.callStatus].message,
             {
               reply_markup: {
-                inline_keyboard:
-                  BotMessageTranslations[dto.callStatus].keyboard[
-                    callInfo.language
-                  ],
+                keyboard:
+                  BotMessageTranslations[dto.callStatus].keyboard
               },
             },
           ),
@@ -39,7 +37,11 @@ export class TwilioController {
       ),
       mergeMap((callInfo) => {
         if (FINAL_CALL_STATUSES.includes(dto.callStatus)) {
-          //return this.twilioService.handleNoAnswer(callInfo, dto);
+          return this.historyService.update(callInfo.historyId, {
+            isActive: false,
+            isCanceled: dto.callStatus !== SUCCESS_CALL_STATUS,
+            cancelationReason: dto.callStatus === SUCCESS_CALL_STATUS ? null : dto.callStatus,
+          })
         }
 
         return of(true);

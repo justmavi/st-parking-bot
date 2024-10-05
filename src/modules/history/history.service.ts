@@ -27,6 +27,6 @@ export class HistoryService {
   }
 
   public update(id: number, state: Partial<History>) {
-    return from(this.repository.update(id, state));
+    return from(this.repository.update(id, state)).pipe(map(() => true))
   }
 }

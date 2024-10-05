@@ -3,6 +3,7 @@ export default () => ({
     httpPort: process.env.HTTP_PORT ?? 5549,
     nodeEnv: process.env.NODE_ENV ?? 'development',
     host: process.env.APP_HOST ?? 'http://localhost:5549',
+    pinCode: process.env.BOT_UNLOCK_PIN_CODE ?? 'changeme'
   },
   log: {
     directoryPath: process.env.LOG_DIRECTORY_PATH ?? './logs',
