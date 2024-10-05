@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2021",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./src",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@common/base/*": ["common/base/*"],
+      "@common/filters/*": ["common/filters/*"],
+      "@common/helpers/*": ["common/helpers/*"],
+      "@common/transformers/*": ["common/transformers/*"],
+      "@common/options/*": ["common/options/*"],
+      "@common/types/*": ["common/types/*"],
+      "@common/decorators/*": ["common/decorators/*"],
+      "@common/constants/*": ["common/constants/*"],
+      "@auth/*": ["modules/auth/*"],
+      "@user/*": ["modules/user/*"],
+      "@category/*": ["modules/category/*"],
+      "@voice/*": ["modules/voice/*"],
+      "@account/*": ["modules/account/*"],
+      "@twilio/*": ["modules/twilio/*"],
+      "@history/*": ["modules/history/*"],
+      "@bot/*": ["modules/telegram-bot/*"]
+    }
+  },
+  "watchOptions": {
+    "watchFile": "fixedPollingInterval"
+  }
+}
