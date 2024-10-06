@@ -27,7 +27,8 @@ export class TelegramBaseHandler {
       format(text, ...(opts.messageArgs ?? [])),
       {
         reply_markup: {
-          keyboard
+          keyboard,
+          remove_keyboard: true
         },
       },
     );

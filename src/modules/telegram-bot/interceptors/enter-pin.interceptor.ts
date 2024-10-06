@@ -18,9 +18,8 @@ export class EnterPinInterceptor implements NestInterceptor {
     const ctx = TelegrafExecutionContext.create(context).getContext<Context>();
 
     if (
-      ctx.session.authorized ||
-      ctx.scene.current?.id === SceneNames.ENTER_PIN ||
-      ctx['command'] === 'start'
+      ctx.session?.authorized ||
+      ctx.scene.current?.id === SceneNames.ENTER_PIN
     )
       return next.handle();
 

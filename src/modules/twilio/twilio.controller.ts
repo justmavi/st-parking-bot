@@ -18,8 +18,9 @@ export class TwilioController {
   ) {}
 
   @Post('call')
-  @HttpCode(HttpStatus.OK)
+  @HttpCode(HttpStatus.NO_CONTENT)
   public handleCallWebhook(@Body() dto: CallWebhookDTO) {
+    console.log({dto})
     return this.twilioService.getCallInfoBySid(dto.callSid).pipe(
       mergeMap((callInfo) =>
         from(
@@ -29,7 +30,8 @@ export class TwilioController {
             {
               reply_markup: {
                 keyboard:
-                  BotMessageTranslations[dto.callStatus].keyboard
+                  BotMessageTranslations[dto.callStatus].keyboard,
+                remove_keyboard: true
               },
             },
           ),
@@ -45,7 +47,7 @@ export class TwilioController {
         }
 
         return of(true);
-      }),
+      })
     );
   }
 }

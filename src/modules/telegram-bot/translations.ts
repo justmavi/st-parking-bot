@@ -13,7 +13,7 @@ export const BotMessageTranslations = {
   },
   mainMenu: {
     message: 'Select the gate that you want to open',
-    keyboard: GATES.map(x => [`Open ${x.name}`]),
+    keyboard: GATES.map(x => [x.name]),
   },
 
   queued: {

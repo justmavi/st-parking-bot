@@ -20,12 +20,13 @@ services:
       POSTGRES_PASSWORD: $POSTGRES_PASSWORD
       TELEGRAM_BOT_TOKEN: $TELEGRAM_BOT_TOKEN
       TELEGRAM_BOT_WEBHOOK_URL: $TELEGRAM_BOT_WEBHOOK_URL
-      TELEGRAM_PRIVATE_CHANNEL_ID: $TELEGRAM_PRIVATE_CHANNEL_ID
       TWILIO_ACCOUNT_SID: $TWILIO_ACCOUNT_SID
       TWILIO_AUTH_TOKEN: $TWILIO_AUTH_TOKEN
     volumes:
       - ./:/app/
       - /app/node_modules
+    ports:
+      - $HTTP_PORT:$HTTP_PORT
     networks:
       main:
         aliases:

@@ -1,6 +1,7 @@
 export const SceneNames = {
   ENTER_PIN: 'enterPin',
   SELECT_GATE: 'selectGate',
+  OPEN_GATE: 'openGate'
 } as const;
 
 export const MAX_AUDIO_ATTACHMENT_COUNT = 10;

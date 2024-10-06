@@ -14,7 +14,6 @@ export default () => ({
     botToken: process.env.TELEGRAM_BOT_TOKEN,
     secretToken: process.env.TELEGRAM_SECRET_TOKEN,
     botWebhookUrl: process.env.TELEGRAM_BOT_WEBHOOK_URL ?? '/bot-webhook',
-    privateChannelId: +process.env.TELEGRAM_PRIVATE_CHANNEL_ID,
   },
   twilio: {
     sid: process.env.TWILIO_ACCOUNT_SID,

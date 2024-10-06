@@ -1,12 +1,13 @@
 import { AccountService } from '@account/account.service';
 import { TelegramBaseHandler } from '@bot/base/handler.base';
 import { TwilioServiceWrapper } from '@twilio/twilio.service';
-import { Scene, SceneEnter } from 'nestjs-telegraf';
+import { Hears, Scene, SceneEnter, Ctx } from 'nestjs-telegraf';
 import { lastValueFrom } from 'rxjs';
 import { SceneNames } from '../constants/bot.constants';
 import { Context } from '../types/context.type';
+import { GATES } from '@common/constants/app.constants';
 
-@Scene(SceneNames.SELECT_GATE)
+@Scene(SceneNames.OPEN_GATE)
 export class CallScene extends TelegramBaseHandler {
   constructor(
     private readonly accountService: AccountService,
@@ -24,13 +25,19 @@ export class CallScene extends TelegramBaseHandler {
       return;
     }
 
+    if (isNaN(ctx.session.selectedGateId))
+    {
+      await ctx.scene.enter(SceneNames.SELECT_GATE);
+      return;
+    }
+
     this.twilioService
-      .makeCall({
-        accountId: ctx.from.id,
-        gateId: ctx.session.selectedGateId
-      })
-      .subscribe(async () => {
-        await this.answer(ctx, 'queued');
-      });
+    .makeCall({
+      accountId: ctx.from.id,
+      gateId: ctx.session.selectedGateId
+    })
+    .subscribe(async () => {
+      await this.answer(ctx, 'queued');
+    });
   }
 }

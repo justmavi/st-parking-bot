@@ -6,9 +6,11 @@ import { TwilioModule } from '@twilio/twilio.module';
 import { TelegrafModule } from 'nestjs-telegraf';
 import { session } from 'telegraf';
 import { BotUpdate } from './bot.update';
-import { Memory } from '@telegraf/session';
-import { CallScene } from './scenes/call.scene';
+import { Memory } from '@telegraf/session/memory';
+import { GateScene } from './scenes/gate.scene';
 import { EnterPinInterceptor } from './interceptors/enter-pin.interceptor';
+import { EnterPinScene } from './scenes/enter-pin.scene';
+import { CallScene } from './scenes/call.scene';
 
 @Module({
   imports: [
@@ -25,11 +27,7 @@ import { EnterPinInterceptor } from './interceptors/enter-pin.interceptor';
           },
         },
         middlewares: [
-          session({
-            store: Memory(),
-            defaultSession: () => ({}),
-            getSessionKey: (ctx) => ctx.from.id,
-          }),
+          session(),
         ],
       }),
       inject: [ConfigService],
@@ -41,7 +39,9 @@ import { EnterPinInterceptor } from './interceptors/enter-pin.interceptor';
   providers: [
     BotUpdate,
     EnterPinInterceptor,
+    GateScene,
     CallScene,
+    EnterPinScene,
   ],
 })
 export class BotModule {}

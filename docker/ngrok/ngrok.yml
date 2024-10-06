@@ -2,4 +2,4 @@ version: 2
 tunnels:
   bot:
     proto: http
-    addr: nginx:80
+    addr: bot:5549
