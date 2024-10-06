@@ -2,7 +2,7 @@ import { EnterPinInterceptor } from '@bot/interceptors/enter-pin.interceptor';
 import { AnswerOptions } from '@bot/types/answer-options.type';
 import { format } from '@common/helpers/string-format.helper';
 import { UseInterceptors } from '@nestjs/common';
-import { BotMessageTranslations } from '../translations';
+import { BotMessageTranslations } from '../messages';
 import { Context } from '../types/context.type';
 
 @UseInterceptors(EnterPinInterceptor)

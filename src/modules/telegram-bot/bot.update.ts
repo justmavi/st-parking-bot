@@ -2,7 +2,7 @@ import { Composer, Ctx, Hears, On, Start, Update } from 'nestjs-telegraf';
 import { TelegramBaseHandler } from './base/handler.base';
 import { SceneNames } from './constants/bot.constants';
 import { Context } from './types/context.type';
-import { GO_TO_MAIN_MENU_TEXT } from './translations';
+import { GO_TO_MAIN_MENU_TEXT } from './messages';
 
 @Update()
 @Composer()

@@ -1,4 +1,4 @@
-import { BotMessageTranslations } from '@bot/translations';
+import { BotMessageTranslations } from '@bot/messages';
 import { Context } from '@bot/types/context.type';
 import { HistoryService } from '@history/history.service';
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
